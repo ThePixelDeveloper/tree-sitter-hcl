@@ -99,6 +99,7 @@ module.exports = grammar({
       $.stringLiteral,
       $.collectionValue,
       $.functionCall,
+      $.forExpression,
 
       seq(
         "(",
@@ -106,6 +107,42 @@ module.exports = grammar({
         ")",
       ),
     ),
+
+    //
+    // For expressions
+    //
+    // ForExpr = forTupleExpr | forObjectExpr;
+    // forTupleExpr = "[" forIntro Expression forCond? "]";
+    // forObjectExpr = "{" forIntro Expression "=>" Expression "..."? forCond? "}";
+    // forIntro = "for" Identifier ("," Identifier)? "in" Expression ":";
+    // forCond = "if" Expression;
+    forExpression: $ => choice(
+      $.forTupleExpression,
+    ),
+
+    forTupleExpression: $ => seq(
+      "[",
+      $.forIntro,
+      $.expression,
+      optional($.forCondition),
+      "]",
+    ),
+
+    // forIntro = "for" Identifier ("," Identifier)? "in" Expression ":";
+    forIntro: $ => seq(
+      "for",
+      IDENTIFIER,
+      optional(seq(",", IDENTIFIER)),
+      "in",
+      $.expression,
+      ":",
+    ),
+
+    forCondition: $ => seq("if", $.expression),
+
+    //
+    // Function calls
+    //
 
     functionCall: $ => seq(
       IDENTIFIER,

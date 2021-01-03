@@ -165,6 +165,10 @@
           "named": true
         },
         {
+          "type": "forExpression",
+          "named": true
+        },
+        {
           "type": "functionCall",
           "named": true
         },
@@ -174,6 +178,74 @@
         },
         {
           "type": "stringLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "forCondition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "forExpression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "forTupleExpression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "forIntro",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "forTupleExpression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "forCondition",
+          "named": true
+        },
+        {
+          "type": "forIntro",
           "named": true
         }
       ]
@@ -443,6 +515,18 @@
   },
   {
     "type": "foo",
+    "named": false
+  },
+  {
+    "type": "for",
+    "named": false
+  },
+  {
+    "type": "if",
+    "named": false
+  },
+  {
+    "type": "in",
     "named": false
   },
   {
