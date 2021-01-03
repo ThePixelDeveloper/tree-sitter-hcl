@@ -1,0 +1,20 @@
+{
+  "name": "tree-sitter-hcl",
+  "version": "1.0.0",
+  "description": "HCL lanauge parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tree-sitter"
+  ],
+  "author": "Mathew Davies",
+  "license": "MIT",
+  "dependencies": {
+    "nan": "^2.14.2"
+  },
+  "devDependencies": {
+    "tree-sitter-cli": "^0.17.3"
+  }
+}
