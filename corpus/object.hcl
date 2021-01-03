@@ -7,7 +7,7 @@ foo = {}
 ---
 
 (body
-  (attribute (expression (expressionTerm (collectionValue (object))))))
+  (attribute (identifier) (expression (expressionTerm (collectionValue (object))))))
 
 ===
 Object with basic types
@@ -18,5 +18,5 @@ foo = {foo: "abc123"}
 ---
 
 (body
-  (attribute (expression (expressionTerm (collectionValue (object
-    (objectElement (expression (expressionTerm (stringLiteral))))))))))
+  (attribute (identifier) (expression (expressionTerm (collectionValue (object
+    (objectElement (identifier) (expression (expressionTerm (stringLiteral))))))))))

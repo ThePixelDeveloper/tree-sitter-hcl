@@ -7,4 +7,4 @@ foo = "bar"
 ---
 
 (body
-  (attribute (expression (expressionTerm (stringLiteral)))))
+  (attribute (identifier) (expression (expressionTerm (stringLiteral)))))

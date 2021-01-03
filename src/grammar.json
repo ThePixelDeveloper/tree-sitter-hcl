@@ -17,6 +17,34 @@
         ]
       }
     },
+    "identifier": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[a-zA-Zα-ωΑ-Ωµ]"
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "PATTERN",
+                  "value": "[a-zA-Zα-ωΑ-Ωµ]"
+                },
+                {
+                  "type": "PATTERN",
+                  "value": "[0-9]"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "numericLiteral": {
       "type": "SEQ",
       "members": [
@@ -267,8 +295,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "foo"
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "STRING",
@@ -284,15 +312,15 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "foo"
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "foo"
+              "type": "SYMBOL",
+              "name": "identifier"
             }
           ]
         }
@@ -403,8 +431,8 @@
           "value": "for"
         },
         {
-          "type": "STRING",
-          "value": "foo"
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "CHOICE",
@@ -417,8 +445,8 @@
                   "value": ","
                 },
                 {
-                  "type": "STRING",
-                  "value": "foo"
+                  "type": "SYMBOL",
+                  "name": "identifier"
                 }
               ]
             },
@@ -458,8 +486,8 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "foo"
+          "type": "SYMBOL",
+          "name": "identifier"
         },
         {
           "type": "STRING",
@@ -665,8 +693,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "STRING",
-              "value": "foo"
+              "type": "SYMBOL",
+              "name": "identifier"
             },
             {
               "type": "SYMBOL",

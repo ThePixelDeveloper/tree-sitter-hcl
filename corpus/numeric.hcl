@@ -7,7 +7,7 @@ foo = -1
 ---
 
 (body
-  (attribute (expression (operation (unaryOp (expressionTerm (literalValue (numericLiteral (decimal)))))))))
+  (attribute (identifier)  (expression (operation (unaryOp (expressionTerm (literalValue (numericLiteral (decimal)))))))))
 
 ===
 Positive
@@ -18,7 +18,7 @@ foo = 1
 ---
 
 (body
-  (attribute (expression (expressionTerm (literalValue (numericLiteral (decimal)))))))
+  (attribute (identifier) (expression (expressionTerm (literalValue (numericLiteral (decimal)))))))
 
 
 ===
@@ -30,7 +30,7 @@ foo = 1.2
 ---
 
 (body
-  (attribute (expression (expressionTerm (literalValue (numericLiteral (decimal) (decimal)))))))
+  (attribute (identifier) (expression (expressionTerm (literalValue (numericLiteral (decimal) (decimal)))))))
 
 
 ===
@@ -42,7 +42,7 @@ foo = -1.2
 ---
 
 (body
-  (attribute (expression (operation (unaryOp (expressionTerm (literalValue (numericLiteral (decimal) (decimal)))))))))
+  (attribute (identifier) (expression (operation (unaryOp (expressionTerm (literalValue (numericLiteral (decimal) (decimal)))))))))
 
 ===
 Scientific notation
@@ -53,4 +53,4 @@ foo = 1.6E-35
 ---
 
 (body
-  (attribute (expression (expressionTerm (literalValue (numericLiteral (decimal) (decimal) (exponentMark) (decimal)))))))
+  (attribute (identifier) (expression (expressionTerm (literalValue (numericLiteral (decimal) (decimal) (exponentMark) (decimal)))))))

@@ -7,4 +7,4 @@ foo = null
 ---
 
 (body
-  (attribute (expression (expressionTerm (literalValue (null))))))
+  (attribute (identifier) (expression (expressionTerm (literalValue (null))))))

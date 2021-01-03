@@ -1,5 +1,3 @@
-const IDENTIFIER = "foo"
-
 module.exports = grammar({
   name: 'hcl',
 
@@ -12,6 +10,17 @@ module.exports = grammar({
     body: $ => repeat(choice(
       $.attribute,
       $.block,
+    )),
+
+    //
+    // Identifier
+    //
+    identifier: $ => token(seq(
+      /[a-zA-Zα-ωΑ-Ωµ]/,
+      repeat(choice(
+        /[a-zA-Zα-ωΑ-Ωµ]/,
+        /[0-9]/,
+      )),
     )),
 
     //
@@ -76,16 +85,15 @@ module.exports = grammar({
     //
 
     attribute: $ => seq(
-      IDENTIFIER,
+      $.identifier,
       "=",
       $.expression,
     ),
 
     block: $ => seq(
-      IDENTIFIER,
+      $.identifier,
       choice(
-
-        IDENTIFIER,
+        $.identifier,
       ),
     ),
 
@@ -114,7 +122,7 @@ module.exports = grammar({
     // ForExpr = forTupleExpr | forObjectExpr;
     // forTupleExpr = "[" forIntro Expression forCond? "]";
     // forObjectExpr = "{" forIntro Expression "=>" Expression "..."? forCond? "}";
-    // forIntro = "for" Identifier ("," Identifier)? "in" Expression ":";
+    // forIntro = "for" $.identifier ("," $.identifier)? "in" Expression ":";
     // forCond = "if" Expression;
     forExpression: $ => choice(
       $.forTupleExpression,
@@ -128,11 +136,11 @@ module.exports = grammar({
       "]",
     ),
 
-    // forIntro = "for" Identifier ("," Identifier)? "in" Expression ":";
+    // forIntro = "for" $.identifier ("," $.identifier)? "in" Expression ":";
     forIntro: $ => seq(
       "for",
-      IDENTIFIER,
-      optional(seq(",", IDENTIFIER)),
+      $.identifier,
+      optional(seq(",", $.identifier)),
       "in",
       $.expression,
       ":",
@@ -145,7 +153,7 @@ module.exports = grammar({
     //
 
     functionCall: $ => seq(
-      IDENTIFIER,
+      $.identifier,
       "(",
       optional($.arguments),
       ")",
@@ -175,7 +183,7 @@ module.exports = grammar({
     ),
 
     objectElement: $ => seq(
-      choice(IDENTIFIER, $.expression),
+      choice($.identifier, $.expression),
       choice("=", ":"),
       $.expression,
     ),

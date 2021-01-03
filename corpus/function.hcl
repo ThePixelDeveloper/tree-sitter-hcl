@@ -7,7 +7,7 @@ foo = foo()
 ---
 
 (body
-  (attribute (expression (expressionTerm (functionCall)))))
+  (attribute (identifier) (expression (expressionTerm (functionCall (identifier))))))
 
 ===
 Function call with arguments
@@ -17,7 +17,7 @@ foo = foo(true, false)
 
 ---
 
-(body (attribute (expression (expressionTerm
-  (functionCall (arguments
+(body (attribute (identifier) (expression (expressionTerm
+  (functionCall (identifier) (arguments
     (expression (expressionTerm (literalValue (true))))
     (expression (expressionTerm (literalValue (false))))))))))
