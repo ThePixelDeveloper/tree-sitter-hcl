@@ -9,7 +9,6 @@ module.exports = grammar({
   rules: {
     body: $ => repeat(choice(
       $.attribute,
-      $.block,
     )),
 
     //
@@ -20,7 +19,9 @@ module.exports = grammar({
       repeat(choice(
         /[a-zA-Zα-ωΑ-Ωµ]/,
         /[0-9]/,
-      )),
+        "-",
+        "_",
+      ))
     )),
 
     //
@@ -43,58 +44,10 @@ module.exports = grammar({
       optional(choice("+", "-")),
     ),
 
-    //
-    // Operations
-    //
-    operation: $ => choice(
-      $.unaryOp,
-      $.binaryOp,
-    ),
-
-    unaryOp: $ => seq(
-      choice("-", "!"),
-      $.expressionTerm
-    ),
-
-    binaryOp: $ => seq(
-      $.expressionTerm,
-      $.binaryOperator,
-      $.expressionTerm,
-    ),
-
-    binaryOperator: $ => choice(
-      $.compareOperator,
-      $.arithmeticOperator,
-      $.logicOperator,
-    ),
-
-    arithmeticOperator: $ => choice(
-      "+", "-", "*", "/", "%",
-    ),
-
-    compareOperator: $ => choice(
-      "==", "!=", "<", ">", "<=", ">=",
-    ),
-
-    logicOperator: $ => choice(
-      "||", "&&", "!"
-    ),
-
-    //
-    //
-    //
-
     attribute: $ => seq(
       $.identifier,
       "=",
       $.expression,
-    ),
-
-    block: $ => seq(
-      $.identifier,
-      choice(
-        $.identifier,
-      ),
     ),
 
     expression: $ => choice(
@@ -119,11 +72,6 @@ module.exports = grammar({
     //
     // For expressions
     //
-    // ForExpr = forTupleExpr | forObjectExpr;
-    // forTupleExpr = "[" forIntro Expression forCond? "]";
-    // forObjectExpr = "{" forIntro Expression "=>" Expression "..."? forCond? "}";
-    // forIntro = "for" $.identifier ("," $.identifier)? "in" Expression ":";
-    // forCond = "if" Expression;
     forExpression: $ => choice(
       $.forTupleExpression,
     ),
@@ -165,6 +113,54 @@ module.exports = grammar({
       optional(choice(",", "...")),
     ),
 
+    stringLiteral: $ => seq(
+      '"',
+      repeat(
+        token.immediate(/[^"\\\n]+|\\\r?\n/),
+      ),
+      '"',
+    ),
+
+    //
+    // Operators
+    //
+    operation: $ => choice(
+      $.unaryOp,
+      $.binaryOp,
+    ),
+
+    unaryOp: $ => seq(
+      choice("-", "!"),
+      $.expressionTerm
+    ),
+
+    binaryOp: $ => seq(
+      $.expressionTerm,
+      $.binaryOperator,
+      $.expressionTerm,
+    ),
+
+    binaryOperator: $ => choice(
+      $.compareOperator,
+      $.arithmeticOperator,
+      $.logicOperator,
+    ),
+
+    arithmeticOperator: $ => choice(
+      "+", "-", "*", "/", "%",
+    ),
+
+    compareOperator: $ => choice(
+      "==", "!=", "<", ">", "<=", ">=",
+    ),
+
+    logicOperator: $ => choice(
+      "||", "&&", "!"
+    ),
+
+    //
+    // Collections
+    //
     collectionValue: $ => choice(
       $.tuple,
       $.object,
@@ -172,13 +168,19 @@ module.exports = grammar({
 
     tuple: $ => seq(
       "[",
-      optional(seq($.expression, repeat(seq(",", $.expression)), optional(","))),
+      optional(
+        seq($.expression,
+          repeat(seq(",", $.expression)),
+          optional(","))),
       "]",
     ),
 
     object: $ => seq(
       "{",
-      optional(seq($.objectElement, repeat(seq(",", $.objectElement)), optional(","))),
+        optional(
+          seq($.objectElement,
+            repeat(seq(",", $.objectElement)),
+            optional(","))),
       "}",
     ),
 
@@ -188,14 +190,9 @@ module.exports = grammar({
       $.expression,
     ),
 
-    stringLiteral: $ => seq(
-      '"',
-      repeat(
-        token.immediate(/[^"\\\n]+|\\\r?\n/),
-      ),
-      '"',
-    ),
-
+    //
+    // Literals
+    //
     literalValue: $ => choice(
       $.numericLiteral,
       $.true,
@@ -203,10 +200,13 @@ module.exports = grammar({
       $.null,
     ),
 
-    true: $ => "true",
+    true:  $ => "true",
     false: $ => "false",
-    null: $ => "null",
+    null:  $ => "null",
 
+    //
+    // Comments
+    //
     comment: $ => token(choice(
       seq('//', /.*/),
       seq('#', /.*/),

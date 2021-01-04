@@ -9,10 +9,6 @@
           {
             "type": "SYMBOL",
             "name": "attribute"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "block"
           }
         ]
       }
@@ -38,6 +34,14 @@
                 {
                   "type": "PATTERN",
                   "value": "[0-9]"
+                },
+                {
+                  "type": "STRING",
+                  "value": "-"
+                },
+                {
+                  "type": "STRING",
+                  "value": "_"
                 }
               ]
             }
@@ -151,146 +155,6 @@
         }
       ]
     },
-    "operation": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "unaryOp"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "binaryOp"
-        }
-      ]
-    },
-    "unaryOp": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "-"
-            },
-            {
-              "type": "STRING",
-              "value": "!"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expressionTerm"
-        }
-      ]
-    },
-    "binaryOp": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "expressionTerm"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "binaryOperator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expressionTerm"
-        }
-      ]
-    },
-    "binaryOperator": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "compareOperator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "arithmeticOperator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "logicOperator"
-        }
-      ]
-    },
-    "arithmeticOperator": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "+"
-        },
-        {
-          "type": "STRING",
-          "value": "-"
-        },
-        {
-          "type": "STRING",
-          "value": "*"
-        },
-        {
-          "type": "STRING",
-          "value": "/"
-        },
-        {
-          "type": "STRING",
-          "value": "%"
-        }
-      ]
-    },
-    "compareOperator": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "=="
-        },
-        {
-          "type": "STRING",
-          "value": "!="
-        },
-        {
-          "type": "STRING",
-          "value": "<"
-        },
-        {
-          "type": "STRING",
-          "value": ">"
-        },
-        {
-          "type": "STRING",
-          "value": "<="
-        },
-        {
-          "type": "STRING",
-          "value": ">="
-        }
-      ]
-    },
-    "logicOperator": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "||"
-        },
-        {
-          "type": "STRING",
-          "value": "&&"
-        },
-        {
-          "type": "STRING",
-          "value": "!"
-        }
-      ]
-    },
     "attribute": {
       "type": "SEQ",
       "members": [
@@ -305,24 +169,6 @@
         {
           "type": "SYMBOL",
           "name": "expression"
-        }
-      ]
-    },
-    "block": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "identifier"
-            }
-          ]
         }
       ]
     },
@@ -557,6 +403,169 @@
         }
       ]
     },
+    "stringLiteral": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[^\"\\\\\\n]+|\\\\\\r?\\n"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
+    },
+    "operation": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "unaryOp"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binaryOp"
+        }
+      ]
+    },
+    "unaryOp": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "STRING",
+              "value": "!"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expressionTerm"
+        }
+      ]
+    },
+    "binaryOp": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "expressionTerm"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binaryOperator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expressionTerm"
+        }
+      ]
+    },
+    "binaryOperator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "compareOperator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "arithmeticOperator"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "logicOperator"
+        }
+      ]
+    },
+    "arithmeticOperator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "+"
+        },
+        {
+          "type": "STRING",
+          "value": "-"
+        },
+        {
+          "type": "STRING",
+          "value": "*"
+        },
+        {
+          "type": "STRING",
+          "value": "/"
+        },
+        {
+          "type": "STRING",
+          "value": "%"
+        }
+      ]
+    },
+    "compareOperator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "=="
+        },
+        {
+          "type": "STRING",
+          "value": "!="
+        },
+        {
+          "type": "STRING",
+          "value": "<"
+        },
+        {
+          "type": "STRING",
+          "value": ">"
+        },
+        {
+          "type": "STRING",
+          "value": "<="
+        },
+        {
+          "type": "STRING",
+          "value": ">="
+        }
+      ]
+    },
+    "logicOperator": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "||"
+        },
+        {
+          "type": "STRING",
+          "value": "&&"
+        },
+        {
+          "type": "STRING",
+          "value": "!"
+        }
+      ]
+    },
     "collectionValue": {
       "type": "CHOICE",
       "members": [
@@ -718,29 +727,6 @@
         {
           "type": "SYMBOL",
           "name": "expression"
-        }
-      ]
-    },
-    "stringLiteral": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "\""
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "IMMEDIATE_TOKEN",
-            "content": {
-              "type": "PATTERN",
-              "value": "[^\"\\\\\\n]+|\\\\\\r?\\n"
-            }
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "\""
         }
       ]
     },

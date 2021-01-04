@@ -2,6 +2,9 @@
 For loop for tuple
 ===
 
-foo = [for foo in ["a", "b"]: foo]
+cidr_blocks = [
+  for num in var.subnet_numbers:
+  cidrsubnet(data.aws_vpc.example.cidr_block, 8, num)
+]
 
 ---
